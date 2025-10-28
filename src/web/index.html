@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 EmojiScript 플레이그라운드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .emoji-palette {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .emoji-btn {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .emoji-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .emoji-btn small {
+            font-size: 0.5em;
+            color: #6c757d;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .editor-section, .output-section {
+            padding: 30px;
+        }
+
+        .editor-section {
+            border-right: 2px solid #e9ecef;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #495057;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #code-editor {
+            width: 100%;
+            min-height: 400px;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            line-height: 1.6;
+            resize: vertical;
+            background: #f8f9fa;
+        }
+
+        #code-editor:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .run-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .run-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .clear-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .clear-btn:hover {
+            background: #5a6268;
+        }
+
+        .example-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .example-btn:hover {
+            background: #218838;
+        }
+
+        #output {
+            background: #212529;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            line-height: 1.8;
+            min-height: 400px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .error {
+            color: #ff4444;
+        }
+
+        .success {
+            color: #00ff00;
+        }
+
+        .info {
+            color: #00bfff;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            border-top: 2px solid #e9ecef;
+        }
+
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .editor-section {
+                border-right: none;
+                border-bottom: 2px solid #e9ecef;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 EmojiScript 플레이그라운드</h1>
+            <p>이모지로 코딩하는 교육용 프로그래밍 언어</p>
+        </header>
+
+        <div class="emoji-palette">
+            <button class="emoji-btn" onclick="insertEmoji('📦')" title="변수 선언">
+                📦<small>변수</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('📢')" title="출력">
+                📢<small>출력</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('➕')" title="더하기">
+                ➕<small>더하기</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('➖')" title="빼기">
+                ➖<small>빼기</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('✖️')" title="곱하기">
+                ✖️<small>곱하기</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('➗')" title="나누기">
+                ➗<small>나누기</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('🔗')" title="문자열 연결">
+                🔗<small>연결</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('❓')" title="조건문">
+                ❓<small>if</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('➡️')" title="실행">
+                ➡️<small>then</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('🔁')" title="반복문">
+                🔁<small>반복</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('🛑')" title="종료">
+                🛑<small>종료</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('🎲')" title="랜덤">
+                🎲<small>랜덤</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('🟰')" title="같음">
+                🟰<small>같음</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('⬆️')" title="크다">
+                ⬆️<small>크다</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('⬇️')" title="작다">
+                ⬇️<small>작다</small>
+            </button>
+            <button class="emoji-btn" onclick="insertEmoji('💭')" title="주석">
+                💭<small>주석</small>
+            </button>
+        </div>
+
+        <div class="main-content">
+            <div class="editor-section">
+                <div class="section-title">
+                    ✏️ 코드 에디터
+                </div>
+                <textarea id="code-editor" placeholder="여기에 EmojiScript 코드를 작성하세요...
+예시:
+📦 이름 &quot;철수&quot;
+📢 &quot;안녕하세요, &quot; 🔗 이름"></textarea>
+                
+                <div class="controls">
+                    <button class="run-btn" onclick="runCode()">▶️ 실행</button>
+                    <button class="clear-btn" onclick="clearEditor()">🗑️ 지우기</button>
+                    <button class="example-btn" onclick="loadExample()">📝 예제 로드</button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div class="section-title">
+                    📺 출력 결과
+                </div>
+                <div id="output">실행 결과가 여기에 표시됩니다...</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>💡 Tip: 이모지 버튼을 클릭하여 쉽게 입력할 수 있습니다!</p>
+            <p>Made with ❤️ for learning</p>
+        </footer>
+    </div>
+
+    <script src="playground.js"></script>
+</body>
+</html>
