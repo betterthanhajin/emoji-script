@@ -3,304 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎨 EmojiScript 플레이그라운드</title>
+    <title>🎨 EmojiScript Playground</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
-
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
+        h1 { font-size: 2em; margin-bottom: 10px; }
         .emoji-palette {
             background: #f8f9fa;
-            padding: 20px;
-            border-bottom: 2px solid #e9ecef;
+            padding: 15px;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
+            border-bottom: 2px solid #e9ecef;
         }
-
         .emoji-btn {
             background: white;
             border: 2px solid #dee2e6;
             border-radius: 8px;
-            padding: 10px 15px;
-            font-size: 1.5em;
+            padding: 8px 12px;
+            font-size: 1.3em;
             cursor: pointer;
             transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
         }
-
         .emoji-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-
-        .emoji-btn small {
-            font-size: 0.5em;
-            color: #6c757d;
-        }
-
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0;
-            min-height: 600px;
+            min-height: 500px;
         }
-
-        .editor-section, .output-section {
-            padding: 30px;
+        .section {
+            padding: 20px;
         }
-
         .editor-section {
             border-right: 2px solid #e9ecef;
         }
-
         .section-title {
-            font-size: 1.3em;
+            font-size: 1.2em;
+            margin-bottom: 10px;
             color: #495057;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
-        #code-editor {
+        #code {
             width: 100%;
-            min-height: 400px;
+            min-height: 350px;
             padding: 15px;
             border: 2px solid #dee2e6;
-            border-radius: 10px;
+            border-radius: 8px;
             font-family: 'Courier New', monospace;
-            font-size: 1.2em;
-            line-height: 1.6;
+            font-size: 1.1em;
             resize: vertical;
             background: #f8f9fa;
         }
-
-        #code-editor:focus {
+        #code:focus {
             outline: none;
             border-color: #667eea;
             background: white;
         }
-
         .controls {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
         }
-
         button {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
             font-size: 1em;
             cursor: pointer;
-            transition: all 0.2s;
             font-weight: 600;
+            transition: all 0.2s;
         }
-
         .run-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
-
         .run-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
-
         .clear-btn {
             background: #6c757d;
             color: white;
         }
-
-        .clear-btn:hover {
-            background: #5a6268;
-        }
-
         .example-btn {
             background: #28a745;
             color: white;
         }
-
-        .example-btn:hover {
-            background: #218838;
-        }
-
         #output {
             background: #212529;
             color: #00ff00;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 8px;
             font-family: 'Courier New', monospace;
-            font-size: 1.1em;
-            line-height: 1.8;
-            min-height: 400px;
+            font-size: 1em;
+            line-height: 1.6;
+            min-height: 350px;
             white-space: pre-wrap;
-            word-wrap: break-word;
         }
-
-        .error {
-            color: #ff4444;
-        }
-
-        .success {
-            color: #00ff00;
-        }
-
-        .info {
-            color: #00bfff;
-        }
-
-        footer {
-            background: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            color: #6c757d;
-            border-top: 2px solid #e9ecef;
-        }
-
-        @media (max-width: 968px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-
-            .editor-section {
-                border-right: none;
-                border-bottom: 2px solid #e9ecef;
-            }
+        .error { color: #ff4444; }
+        .success { color: #00ff00; }
+        @media (max-width: 768px) {
+            .main-content { grid-template-columns: 1fr; }
+            .editor-section { border-right: none; border-bottom: 2px solid #e9ecef; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎨 EmojiScript 플레이그라운드</h1>
-            <p>이모지로 코딩하는 교육용 프로그래밍 언어</p>
+            <h1>😘 EmojiScript Playground</h1>
         </header>
 
         <div class="emoji-palette">
-            <button class="emoji-btn" onclick="insertEmoji('📦')" title="변수 선언">
-                📦<small>변수</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('📢')" title="출력">
-                📢<small>출력</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('➕')" title="더하기">
-                ➕<small>더하기</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('➖')" title="빼기">
-                ➖<small>빼기</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('✖️')" title="곱하기">
-                ✖️<small>곱하기</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('➗')" title="나누기">
-                ➗<small>나누기</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('🔗')" title="문자열 연결">
-                🔗<small>연결</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('❓')" title="조건문">
-                ❓<small>if</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('➡️')" title="실행">
-                ➡️<small>then</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('🔁')" title="반복문">
-                🔁<small>반복</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('🛑')" title="종료">
-                🛑<small>종료</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('🎲')" title="랜덤">
-                🎲<small>랜덤</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('🟰')" title="같음">
-                🟰<small>같음</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('⬆️')" title="크다">
-                ⬆️<small>크다</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('⬇️')" title="작다">
-                ⬇️<small>작다</small>
-            </button>
-            <button class="emoji-btn" onclick="insertEmoji('💭')" title="주석">
-                💭<small>주석</small>
-            </button>
+            <button class="emoji-btn" onclick="insert('📦')" title="변수">📦</button>
+            <button class="emoji-btn" onclick="insert('📢')" title="출력">📢</button>
+            <button class="emoji-btn" onclick="insert('➕')" title="더하기">➕</button>
+            <button class="emoji-btn" onclick="insert('➖')" title="빼기">➖</button>
+            <button class="emoji-btn" onclick="insert('✖️')" title="곱하기">✖️</button>
+            <button class="emoji-btn" onclick="insert('➗')" title="나누기">➗</button>
+            <button class="emoji-btn" onclick="insert('🔗')" title="연결">🔗</button>
+            <button class="emoji-btn" onclick="insert('❓')" title="if">❓</button>
+            <button class="emoji-btn" onclick="insert('➡️')" title="then">➡️</button>
+            <button class="emoji-btn" onclick="insert('🔁')" title="반복">🔁</button>
+            <button class="emoji-btn" onclick="insert('🛑')" title="종료">🛑</button>
+            <button class="emoji-btn" onclick="insert('🎲')" title="랜덤">🎲</button>
+            <button class="emoji-btn" onclick="insert('🟰')" title="같음">🟰</button>
+            <button class="emoji-btn" onclick="insert('⬆️')" title="크다">⬆️</button>
+            <button class="emoji-btn" onclick="insert('⬇️')" title="작다">⬇️</button>
         </div>
 
         <div class="main-content">
-            <div class="editor-section">
-                <div class="section-title">
-                    ✏️ 코드 에디터
-                </div>
-                <textarea id="code-editor" placeholder="여기에 EmojiScript 코드를 작성하세요...
+            <div class="section editor-section">
+                <div class="section-title">✏️ 코드 에디터</div>
+                <textarea id="code" placeholder="여기에 코드 작성...
+
 예시:
 📦 이름 &quot;철수&quot;
-📢 &quot;안녕하세요, &quot; 🔗 이름"></textarea>
-                
+📢 &quot;안녕, &quot; 🔗 이름">📦 이름 "철수"
+📢 "안녕, " 🔗 이름</textarea>
                 <div class="controls">
-                    <button class="run-btn" onclick="runCode()">▶️ 실행</button>
-                    <button class="clear-btn" onclick="clearEditor()">🗑️ 지우기</button>
-                    <button class="example-btn" onclick="loadExample()">📝 예제 로드</button>
+                    <button class="run-btn" onclick="run()">▶️ 실행</button>
+                    <button class="clear-btn" onclick="clearFeature()">🗑️ 지우기</button>
+                    <button class="example-btn" onclick="loadExample()">📝 예제</button>
                 </div>
             </div>
 
-            <div class="output-section">
-                <div class="section-title">
-                    📺 출력 결과
-                </div>
+            <div class="section">
+                <div class="section-title">📺 출력</div>
                 <div id="output">실행 결과가 여기에 표시됩니다...</div>
             </div>
         </div>
-
-        <footer>
-            <p>💡 Tip: 이모지 버튼을 클릭하여 쉽게 입력할 수 있습니다!</p>
-            <p>Made with ❤️ for learning</p>
-        </footer>
     </div>
 
-    <script src="playground.js"></script>
+    <script>
+        // EmojiScript 인터프리터
+        class EmojiScript {
+            constructor() {
+                this.vars = new Map();
+                this.out = [];
+            }
+
+            tokenize(code) {
+                const tokens = [];
+                const chars = Array.from(code);
+                let pos = 0, line = 1;
+                
+                const emojiMap = {
+                    '📦': 'VAR', '📢': 'PRINT', '➕': 'PLUS', '➖': 'MINUS',
+                    '✖️': 'MUL', '✖': 'MUL', '➗': 'DIV', '🔗': 'CAT',
+                    '❓': 'IF', '➡️': 'THEN', '➡': 'THEN',
+                    '🔁': 'LOOP', '🛑': 'END', '🎲': 'RAND',
+                    '🟰': 'EQ', '⬆️': 'GT', '⬆': 'GT', '⬇️': 'LT', '⬇': 'LT',
+                    '💭': 'CMT'
+                };
+
+                while (pos < chars.length) {
+                    const c = chars[pos];
+                    const c2 = c + (chars[pos + 1] || '');
+
+                    if (c === ' ' || c === '\t' || c === '\r') { pos++; continue; }
+                    if (c === '\n') { tokens.push({type: 'NL', line}); line++; pos++; continue; }
+                    if (c === '💭') { while (pos < chars.length && chars[pos] !== '\n') pos++; continue; }
+
+                    if (emojiMap[c2]) { tokens.push({type: emojiMap[c2], line}); pos += 2; continue; }
+                    if (emojiMap[c]) { tokens.push({type: emojiMap[c], line}); pos++; continue; }
+
+                    if (c === '"') {
+                        let s = ''; pos++;
+                        while (pos < chars.length && chars[pos] !== '"') s += chars[pos++];
+                        if (pos < chars.length) pos++;
+                        tokens.push({type: 'STR', val: s, line});
+                        continue;
+                    }
+
+                    if (c >= '0' && c <= '9') {
+                        let n = '';
+                        while (pos < chars.length && (chars[pos] >= '0' && chars[pos] <= '9' || chars[pos] === '.')) 
+                            n += chars[pos++];
+                        tokens.push({type: 'NUM', val: parseFloat(n), line});
+                        continue;
+                    }
+
+                    let id = '';
+                    while (pos < chars.length && chars[pos] !== ' ' && chars[pos] !== '\n' && 
+                           !emojiMap[chars[pos]] && !emojiMap[chars[pos] + (chars[pos + 1] || '')])
+                        id += chars[pos++];
+                    if (id) { tokens.push({type: 'ID', val: id, line}); continue; }
+
+                    pos++;
+                }
+                
+                return tokens;
+            }
+
+            parse(tokens) {
+                let pos = 0;
+                const peek = () => tokens[pos] || {type: 'EOF'};
+                const next = () => tokens[pos++];
+                const skip = () => { while (peek().type === 'NL') next(); };
+
+                const expr = () => {
+                    let left = primary();
+                    while (['PLUS','MINUS','MUL','DIV','CAT','EQ','GT','LT'].includes(peek().type)) {
+                        const op = next().type;
+                        left = {type: 'BinOp', op, left, right: primary()};
+                    }
+                    return left;
+                };
+
+                const primary = () => {
+                    const t = peek();
+                    if (t.type === 'NUM') { next(); return {type: 'Num', val: t.val}; }
+                    if (t.type === 'STR') { next(); return {type: 'Str', val: t.val}; }
+                    if (t.type === 'ID') { next(); return {type: 'Var', name: t.val}; }
+                    if (t.type === 'RAND') { 
+                        next(); 
+                        const max = peek().type !== 'NL' ? expr() : {type: 'Num', val: 100};
+                        return {type: 'Rand', max};
+                    }
+                    throw new Error(`Unexpected token: ${t.type}`);
+                };
+
+                const stmts = [];
+                while (peek().type !== 'EOF') {
+                    skip();
+                    if (peek().type === 'EOF') break;
+
+                    const t = peek();
+                    if (t.type === 'VAR') {
+                        next();
+                        const name = next();
+                        if (name.type !== 'ID') throw new Error('Variable name expected');
+                        stmts.push({type: 'Assign', name: name.val, val: expr()});
+                    } else if (t.type === 'PRINT') {
+                        next();
+                        stmts.push({type: 'Print', val: expr()});
+                    } else if (t.type === 'IF') {
+                        next();
+                        const cond = expr();
+                        if (next().type !== 'THEN') throw new Error('➡️ expected');
+                        skip();
+                        const body = [];
+                        while (peek().type !== 'END' && peek().type !== 'EOF') {
+                            skip();
+                            if (peek().type === 'END' || peek().type === 'EOF') break;
+                            if (peek().type === 'PRINT') {
+                                next();
+                                body.push({type: 'Print', val: expr()});
+                            }
+                            skip();
+                        }
+                        if (peek().type === 'END') next();
+                        stmts.push({type: 'If', cond, body});
+                    } else if (t.type === 'LOOP') {
+                        next();
+                        const cnt = expr();
+                        skip();
+                        const body = [];
+                        while (peek().type !== 'END' && peek().type !== 'EOF') {
+                            skip();
+                            if (peek().type === 'END' || peek().type === 'EOF') break;
+                            if (peek().type === 'PRINT') {
+                                next();
+                                body.push({type: 'Print', val: expr()});
+                            }
+                            skip();
+                        }
+                        if (peek().type === 'END') next();
+                        stmts.push({type: 'Loop', cnt, body});
+                    }
+                    skip();
+                }
+                return stmts;
+            }
+
+            async eval(node) {
+                switch (node.type) {
+                    case 'Num': return node.val;
+                    case 'Str': return node.val;
+                    case 'Var':
+                        if (!this.vars.has(node.name)) throw new Error(`Unknown variable: ${node.name}`);
+                        return this.vars.get(node.name);
+                    case 'Assign':
+                        const v = await this.eval(node.val);
+                        this.vars.set(node.name, v);
+                        return v;
+                    case 'Print':
+                        const p = await this.eval(node.val);
+                        this.out.push(String(p));
+                        return null;
+                    case 'BinOp':
+                        const l = await this.eval(node.left);
+                        const r = await this.eval(node.right);
+                        switch (node.op) {
+                            case 'PLUS': return l + r;
+                            case 'MINUS': return l - r;
+                            case 'MUL': return l * r;
+                            case 'DIV': return r !== 0 ? l / r : (() => { throw new Error('Division by zero'); })();
+                            case 'CAT': return String(l) + String(r);
+                            case 'EQ': return l === r;
+                            case 'GT': return l > r;
+                            case 'LT': return l < r;
+                        }
+                    case 'If':
+                        if (await this.eval(node.cond)) {
+                            for (const s of node.body) await this.eval(s);
+                        }
+                        return null;
+                    case 'Loop':
+                        const c = await this.eval(node.cnt);
+                        for (let i = 0; i < c; i++) {
+                            for (const s of node.body) await this.eval(s);
+                        }
+                        return null;
+                    case 'Rand':
+                        const m = await this.eval(node.max);
+                        return Math.floor(Math.random() * m);
+                }
+            }
+
+            async run(code) {
+                this.vars.clear();
+                this.out = [];
+                try {
+                    const tokens = this.tokenize(code);
+                    const ast = this.parse(tokens);
+                    for (const node of ast) await this.eval(node);
+                    return {ok: true, out: this.out};
+                } catch (e) {
+                    return {ok: false, err: e.message};
+                }
+            }
+        }
+
+        const interp = new EmojiScript();
+
+        function insert(emoji) {
+            const el = document.getElementById('code');
+            const start = el.selectionStart;
+            const end = el.selectionEnd;
+            el.value = el.value.substring(0, start) + emoji + el.value.substring(end);
+            el.selectionStart = el.selectionEnd = start + emoji.length;
+            el.focus();
+        }
+
+        async function run() {
+            const code = document.getElementById('code').value;
+            const out = document.getElementById('output');
+            out.innerHTML = '<span class="success">🚀 실행 중...</span>\n\n';
+            
+            const result = await interp.run(code);
+            if (result.ok) {
+                out.innerHTML = result.out.length > 0 
+                    ? '<span class="success">✅ 성공!</span>\n\n' + result.out.join('\n')
+                    : '<span class="success">✅ 성공! (출력 없음)</span>';
+            } else {
+                out.innerHTML = '<span class="error">❌ 오류!</span>\n\n<span class="error">' + result.err + '</span>';
+            }
+        }
+
+        function clearFeature() {
+            document.getElementById('code').value = '';
+            document.getElementById('output').textContent = '실행 결과가 여기에 표시됩니다...';
+        }
+
+        function loadExample() {
+            const examples = [
+                '📦 이름 "철수"\n📢 "안녕, " 🔗 이름',
+                '📦 a 10\n📦 b 5\n📢 "합: " 🔗 a ➕ b',
+                '🔁 3\n  📢 "⭐"\n🛑',
+                '📦 점수 90\n❓ 점수 ⬆️ 80 ➡️\n  📢 "합격!"\n🛑',
+                '📦 num 🎲 10\n📢 "랜덤: " 🔗 num'
+            ];
+            document.getElementById('code').value = examples[Math.floor(Math.random() * examples.length)];
+        }
+
+        document.getElementById('code').addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); run(); }
+        });
+    </script>
 </body>
 </html>
